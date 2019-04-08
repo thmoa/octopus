@@ -173,7 +173,7 @@ class Octopus(object):
         D = sampling['down']
         A = sampling['adjacency']
 
-        self.faces = M[0].f.astype(np.int32)
+        self.faces = M[0]['f'].astype(np.int32)
 
         low_res = D[-1].shape[0]
         tf_U = [sparse_to_tensor(u) for u in U]
