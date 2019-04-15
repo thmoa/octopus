@@ -21,7 +21,7 @@ unzip <downloads_folder>/octopus_weights.hdf5.zip -d weights
 ## Usage
 
 We provide scripts and sample data for single subject (`infer_single.py` ) and batch processing (`infer_batch.py`).
-Both scripts output usage information, when excecuted without parameters.
+Both scripts output usage information when executed without parameters.
 
 ### Quick start
 
@@ -32,8 +32,6 @@ bash run_demo.sh
 bash run_batch_demo.sh
 ```
 
-
-
 ## Data preparation
 
 If you want to process your own data, some pre-processing steps are needed:
@@ -43,6 +41,11 @@ If you want to process your own data, some pre-processing steps are needed:
 3. Run [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose) body_25 and face keypoint detection on your images.
 
 Semantic segmentation and OpenPose keypoints form the input to Octopus. See `data` folder for sample data.
+
+## Texture
+
+The following code may be used to stitch a texture for the reconstruction: https://github.com/thmoa/semantic_human_texture_stitching
+
 
 ## Citation
 
