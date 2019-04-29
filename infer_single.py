@@ -1,12 +1,13 @@
 import os
 import argparse
+import tensorflow as tf
+import keras.backend as K
 
 from glob import glob
 
 from lib.io import openpose_from_file, read_segmentation, write_mesh
 from model.octopus import Octopus
 
-import tensorflow as tf
 
 def main(weights, name, segm_dir, pose_dir, out_dir, opt_pose_steps, opt_shape_steps):
     segm_files = sorted(glob(os.path.join(segm_dir, '*.png')))
@@ -15,7 +16,7 @@ def main(weights, name, segm_dir, pose_dir, out_dir, opt_pose_steps, opt_shape_s
     if len(segm_files) != len(pose_files) or len(segm_files) == len(pose_files) == 0:
         exit('Inconsistent input.')
 
-    tf.keras.backend.set_session(tf.Session(config=tf.ConfigProto(gpu_options=tf.GPUOptions(allow_growth=True))))
+    K.set_session(tf.Session(config=tf.ConfigProto(gpu_options=tf.GPUOptions(allow_growth=True))))
 
     model = Octopus(num=len(segm_files))
     model.load(weights)
