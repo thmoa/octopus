@@ -1,6 +1,8 @@
 import os
 import csv
 import argparse
+import tensorflow as tf
+import keras.backend as K
 
 from glob import glob
 
@@ -9,6 +11,8 @@ from model.octopus import Octopus
 
 
 def main(weights, num, batch_file, opt_pose_steps, opt_shape_steps):
+    K.set_session(tf.Session(config=tf.ConfigProto(gpu_options=tf.GPUOptions(allow_growth=True))))
+
     model = Octopus(num=num)
 
     with open(batch_file, 'rb') as f:
