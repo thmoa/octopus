@@ -7,8 +7,11 @@ from glob import glob
 from lib.io import openpose_from_file, read_segmentation, write_mesh
 from model.octopus import Octopus
 
+import tensorflow as tf
 
 def main(weights, num, batch_file, opt_pose_steps, opt_shape_steps):
+    tf.keras.backend.set_session(tf.Session(config=tf.ConfigProto(gpu_options=tf.GPUOptions(allow_growth=True))))
+
     model = Octopus(num=num)
 
     with open(batch_file, 'rb') as f:
