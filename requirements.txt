@@ -1,5 +1,5 @@
 scipy>=1.0.0
-numpy>=1.12
+numpy>=1.16
 Keras>=2.2.0
 tensorflow_gpu>=1.11.0
 dirt
