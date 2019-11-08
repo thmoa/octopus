@@ -15,7 +15,8 @@ def sparse_dense_matmul_batch(a, b):
     indices = tf.reshape(a.indices, (num_b, -1, 3))
     values = tf.reshape(a.values, (num_b, -1))
 
-    def matmul((i, bb)):
+    def matmul(arguments):
+        i, bb=arguments
         sp = tf.SparseTensor(indices[i, :, 1:], values[i], shape[1:])
         return i, tf.sparse_tensor_dense_matmul(sp, bb)
 
