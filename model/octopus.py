@@ -166,7 +166,7 @@ class Octopus(object):
         self.betas = Dense(10, name='betas', trainable=False)(self.dense_merged)
 
         with open(os.path.join(os.path.dirname(__file__), '../assets/smpl_sampling.pkl'), 'rb') as f:
-            sampling = pkl.load(f)
+            sampling = pkl.load(f,encoding='iso-8859-1')
 
         M = sampling['meshes']
         U = sampling['up']
@@ -202,9 +202,9 @@ class Octopus(object):
         # we only need one instance per batch for laplace
         self.vertices_tposed = Lambda(lambda s: s[1], name='vertices_tposed')(smpls[0])
         vertices_naked = Lambda(lambda s: s[2], name='vertices_naked')(smpls[0])
-
-        self.laplacian = Lambda(lambda (v0, v1): compute_laplacian_diff(v0, v1, self.faces), name='laplacian')(
-            [self.vertices_tposed, vertices_naked])
+        #function_laplacian=
+        def laplacian_function(x,faces=self.faces):v0,v1=x;return compute_laplacian_diff(v0, v1, faces)
+        self.laplacian = Lambda(laplacian_function, name='laplacian')([self.vertices_tposed, vertices_naked])
         self.symmetry = NameLayer('symmetry')(self.vertices_tposed)
 
         l = SmplBody25FaceLayer(theta_in_rodrigues=False, theta_is_perfect_rotmtx=False)

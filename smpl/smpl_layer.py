@@ -1,6 +1,6 @@
 import tensorflow as tf
-from batch_smpl import SMPL
-from joints import joints_body25, face_landmarks
+from .batch_smpl import SMPL
+from .joints import joints_body25, face_landmarks
 from keras.engine.topology import Layer
 
 
@@ -10,7 +10,8 @@ class SmplTPoseLayer(Layer):
         self.smpl = SMPL(model, theta_in_rodrigues, theta_is_perfect_rotmtx)
         super(SmplTPoseLayer, self).__init__(**kwargs)
 
-    def call(self, (pose, betas, trans, v_personal)):
+    def call(self, arguments):
+        pose, betas, trans, v_personal=arguments
         verts = self.smpl(pose, betas, trans, v_personal)
 
         return [verts, self.smpl.v_shaped_personal, self.smpl.v_shaped]
@@ -27,7 +28,8 @@ class SmplBody25FaceLayer(Layer):
         self.smpl = SMPL(model, theta_in_rodrigues, theta_is_perfect_rotmtx)
         super(SmplBody25FaceLayer, self).__init__(**kwargs)
 
-    def call(self, (pose, betas, trans)):
+    def call(self, arguments):
+        pose, betas, trans=arguments
         v_personal = tf.tile(tf.zeros((1, 6890, 3)), (tf.shape(betas)[0], 1, 1))
 
         v = self.smpl(pose, betas, trans, v_personal)

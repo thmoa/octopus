@@ -15,7 +15,7 @@ def main(weights, num, batch_file, opt_pose_steps, opt_shape_steps):
 
     model = Octopus(num=num)
 
-    with open(batch_file, 'rb') as f:
+    with open(batch_file, 'r') as f:
         reader = csv.reader(f, delimiter=' ')
 
         for name, segm_dir, pose_dir, out_dir in reader:

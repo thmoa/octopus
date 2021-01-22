@@ -69,8 +69,8 @@ class SMPL(object):
         pkl_path is the path to a SMPL model
         """
         # -- Load SMPL params --
-        with open(pkl_path, 'r') as f:
-            dd = pickle.load(f)
+        with open(pkl_path, 'rb') as f:
+            dd = pickle.load(f,encoding='iso-8859-1')
         # Mean template vertices
         self.v_template = tf.Variable(
             undo_chumpy(dd['v_template']),
